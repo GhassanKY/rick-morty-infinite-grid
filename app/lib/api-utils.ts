@@ -1,4 +1,5 @@
 import { RETRY_CONFIG, TIME } from "../constants/api";
+import { ApiResponse } from "../intefaces/apiResponse";
 
 /**
  * Calculates the wait time (in ms) before performing a retry.
@@ -19,10 +20,10 @@ export const getRetryDelay = (retries: number, retryAfterHeader?: string): numbe
 };
 
 /**
- * Generic Type Guard to verify the structure of an API response.
+ * Type Guard to verify the structure of an API response.
  * Ensures the 'info' metadata exists and the primary data field is a valid array.
  */
-export const isValidResponse = <T>(data: any, field: keyof T): data is T => {
-  return data && data.info && Array.isArray(data[field]);
+export const isValidResponse = (data: ApiResponse, field: keyof ApiResponse): boolean => {
+  return !!data && !!data.info && Array.isArray(data[field]);
 };
 

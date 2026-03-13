@@ -10,7 +10,7 @@ export const getPhotos = async (page: number, retries: number = RETRY_CONFIG.MAX
   try {
     const { data } = await api.get<ApiResponse>('/character', { params: { page } });
 
-    if (!isValidResponse<ApiResponse>(data, 'results')) {
+    if (!isValidResponse(data, 'results')) {
       throw new Error(`Invalid schema on page ${page}`);
     }
 
