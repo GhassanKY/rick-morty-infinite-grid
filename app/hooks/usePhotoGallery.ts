@@ -10,40 +10,47 @@ export const usePhotoGallery = ({ initialData }: { initialData: Character[] }) =
     const [hasMore, setHasMore] = useState(true);
     const [isFetching, setIsFetching] = useState(false);
     const isFetchingRef = useRef(false);
+    const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const handleDelete = (id: number) => {
         setPhotos((current) => current.filter((photo) => photo.id !== id));
     };
 
-    const loadMorePhotos = useCallback(async () => {
+    const loadMorePhotos = useCallback(() => {
         if (isFetchingRef.current || !hasMore) return;
-        isFetchingRef.current = true;
-        setIsFetching(true);
 
-        try {
-            const nextPage = page + RETRY_CONFIG.RETRY_STEP;
-            const response: ApiResponse = await getPhotos(nextPage);
+        if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
 
-            if (!response.results.length) {
-                setHasMore(false);
-                return;
+        debounceTimerRef.current = setTimeout(async () => {
+            if (isFetchingRef.current || !hasMore) return;
+            isFetchingRef.current = true;
+            setIsFetching(true);
+
+            try {
+                const nextPage = page + RETRY_CONFIG.RETRY_STEP;
+                const response: ApiResponse = await getPhotos(nextPage);
+
+                if (!response.results.length) {
+                    setHasMore(false);
+                    return;
+                }
+
+                setPhotos((prevPhotos) => {
+                    const existingIds = new Set(prevPhotos.map(p => p.id));
+                    const uniqueNewPhotos = response.results.filter(p => !existingIds.has(p.id));
+                    return [...prevPhotos, ...uniqueNewPhotos];
+                });
+
+                setPage(nextPage);
+                setHasMore(!!response.info.next);
+
+            } catch (error) {
+                console.error("[Hook Error]: Failed to load more photos", error);
+            } finally {
+                isFetchingRef.current = false;
+                setIsFetching(false);
             }
-
-            setPhotos((prevPhotos) => {
-                const existingIds = new Set(prevPhotos.map(p => p.id));
-                const uniqueNewPhotos = response.results.filter(p => !existingIds.has(p.id));
-                return [...prevPhotos, ...uniqueNewPhotos];
-            });
-
-            setPage(nextPage);
-            setHasMore(!!response.info.next);
-
-        } catch (error) {
-            console.error("[Hook Error]: Failed to load more photos", error);
-        } finally {
-            isFetchingRef.current = false;
-            setIsFetching(false);
-        }
+        }, APP_CONFIG.FETCH_DEBOUNCE_MS);
     }, [hasMore, page]);
 
     useEffect(() => {

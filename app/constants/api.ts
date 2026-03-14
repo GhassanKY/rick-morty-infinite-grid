@@ -21,6 +21,7 @@ export const RETRY_CONFIG = {
 export const APP_CONFIG = {
   MIN_ITEMS_THRESHOLD: 20,
   DEFAULT_PAGE_SIZE: 20,
+  FETCH_DEBOUNCE_MS: 300,
 } as const;
 
 /**
