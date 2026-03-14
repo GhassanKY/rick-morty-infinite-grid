@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import PhotoCard from '../../app/components/PhotoCard';
-import { Character, Status, Species, Gender } from '../../app/intefaces/character';
+import { Character } from '../../app/intefaces/character';
 
 jest.mock('framer-motion', () => ({
     motion: {
@@ -14,10 +14,10 @@ describe('PhotoCard Component', () => {
     const mockCharacter: Character = {
         id: 101,
         name: "Rick Sanchez",
-        status: Status.Alive,
-        species: Species.Human,
+        status: "Alive",
+        species: "Human",
         type: "",
-        gender: Gender.Male,
+        gender: "Male",
         origin: { name: "Earth", url: "" },
         location: { name: "Earth", url: "" },
         image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",

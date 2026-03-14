@@ -1,7 +1,7 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
 import { usePhotoGallery } from '../../app/hooks/usePhotoGallery';
 import { getPhotos } from '../../app/actions/getPhotos';
-import { Character, Status, Species, Gender } from '../../app/intefaces/character';
+import { Character } from '../../app/intefaces/character';
 import { ApiResponse, EMPTY_API_RESPONSE } from '../../app/intefaces/apiResponse';
 import { APP_CONFIG } from '../../app/constants/api';
 
@@ -12,10 +12,10 @@ jest.mock('../../app/actions/getPhotos', () => ({
 const createMockCharacter = (id: number, name: string): Character => ({
     id,
     name,
-    status: Status.Alive,
-    species: Species.Human,
+    status: "Alive",
+    species: "Human",
     type: "",
-    gender: Gender.Male,
+    gender: "Male",
     origin: { name: "Earth", url: "" },
     location: { name: "Earth", url: "" },
     image: `https://rickandmortyapi.com/api/character/avatar/${id}.jpeg`,

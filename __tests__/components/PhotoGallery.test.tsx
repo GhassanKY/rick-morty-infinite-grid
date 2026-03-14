@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import PhotoGallery from '../../app/components/PhotoGallery';
 import { usePhotoGallery } from '../../app/hooks/usePhotoGallery';
-import { Character, Status, Species, Gender } from '../../app/intefaces/character';
+import { Character } from '../../app/intefaces/character';
 import React, { ReactNode, ImgHTMLAttributes } from 'react';
 import { ImageProps } from 'next/image';
 
@@ -53,10 +53,10 @@ describe('PhotoGallery Component', () => {
     const createMockCharacter = (id: number, name: string): Character => ({
         id,
         name,
-        status: Status.Alive,
-        species: Species.Human,
+        status: "Alive",
+        species: "Human",
         type: "",
-        gender: Gender.Male,
+        gender: "Male",
         origin: { name: "Earth", url: "" },
         location: { name: "Earth", url: "" },
         image: `https://rickandmortyapi.com/api/character/avatar/${id}.jpeg`,
@@ -102,7 +102,7 @@ describe('PhotoGallery Component', () => {
 
         render(<PhotoGallery initialData={mockInitialData} />);
 
-        const endMessage = screen.getByText('Has llegado al final de la galería.');
+        const endMessage = screen.getByText('You have reached the end of this gallery.');
         expect(endMessage).toBeInTheDocument();
     });
 });

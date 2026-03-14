@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -12,8 +13,6 @@ const nextConfig: NextConfig = {
         hostname: 'rickandmortyapi.com',
       },
     ],
-    minimumCacheTTL: 3600,
-    formats: ['image/webp'],
   },
 };
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from "react"
+import { useRef, useState, useCallback, useEffect } from "react"
 import { getPhotos } from "../actions/getPhotos"
 import { ApiResponse } from "../intefaces/apiResponse"
 import { APP_CONFIG, RETRY_CONFIG } from "../constants/api"
@@ -15,10 +15,8 @@ export const usePhotoGallery = ({ initialData }: { initialData: Character[] }) =
         setPhotos((current) => current.filter((photo) => photo.id !== id));
     };
 
-
     const loadMorePhotos = useCallback(async () => {
         if (isFetchingRef.current || !hasMore) return;
-
         isFetchingRef.current = true;
         setIsFetching(true);
 
@@ -49,11 +47,11 @@ export const usePhotoGallery = ({ initialData }: { initialData: Character[] }) =
     }, [hasMore, page]);
 
     useEffect(() => {
-        const isListTooShort = photos.length < APP_CONFIG.MIN_ITEMS_THRESHOLD;
-        if (isListTooShort && hasMore && !isFetching) {
+        if (initialData.length < APP_CONFIG.MIN_ITEMS_THRESHOLD) {
             loadMorePhotos();
         }
-    }, [photos.length, hasMore, isFetching, loadMorePhotos]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return {
         photos,

@@ -5,7 +5,7 @@ class IntersectionObserverMock {
   readonly root: Element | null = null;
   readonly rootMargin: string = '';
   readonly thresholds: ReadonlyArray<number> = [];
-  
+
   observe = jest.fn();
   unobserve = jest.fn();
   disconnect = jest.fn();

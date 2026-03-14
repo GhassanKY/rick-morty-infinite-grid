@@ -22,7 +22,7 @@ describe('Axios Instance Configuration', () => {
   });
 
   it('should have the correct custom defaults', () => {
-    expect(api.defaults.baseURL).toBe(process.env.BASE_URL);
+    expect(api.defaults.baseURL).toBe('https://rickandmortyapi.com/api');
     expect(api.defaults.timeout).toBe(5000);
     expect(api.defaults.headers['Content-Type']).toBe('application/json');
   });

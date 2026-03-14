@@ -1,6 +1,6 @@
 import { getPhotos } from '../../app/actions/getPhotos';
 import api from '../../app/services/axios';
-import { Character, Status, Species, Gender } from '../../app/intefaces/character';
+import { Character } from '../../app/intefaces/character';
 import { ApiResponse, EMPTY_API_RESPONSE } from '../../app/intefaces/apiResponse';
 
 jest.mock('../../app/services/axios', () => ({
@@ -13,6 +13,7 @@ jest.mock('axios', () => ({
 }));
 
 describe('getPhotos Action', () => {
+  
   beforeAll(() => {
     jest.spyOn(console, 'error').mockImplementation(() => {});
     jest.spyOn(console, 'warn').mockImplementation(() => {});
@@ -30,10 +31,10 @@ describe('getPhotos Action', () => {
   const mockCharacter: Character = {
     id: 1,
     name: "Rick",
-    status: Status.Alive,
-    species: Species.Human,
+    status: "Alive",
+    species: "Human",
     type: "",
-    gender: Gender.Male,
+    gender: "Male",
     origin: { name: "", url: "" },
     location: { name: "", url: "" },
     image: "",

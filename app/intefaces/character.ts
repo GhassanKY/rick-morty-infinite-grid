@@ -13,24 +13,14 @@ export interface Character {
     created:  Date;
 }
 
-export enum Gender {
-    Female = "Female",
-    Male = "Male",
-    Unknown = "unknown",
-}
-
-export interface Location {
+interface Location {
     name: string;
     url:  string;
 }
 
-export enum Species {
-    Alien = "Alien",
-    Human = "Human",
-}
+type Gender = "Female" | "Male" | "unknown"
 
-export enum Status {
-    Alive = "Alive",
-    Dead = "Dead",
-    Unknown = "unknown",
-}
+type Species = "Alien" | "Human"
+
+type Status = "Alive" | "Dead" | "unknown"
+
